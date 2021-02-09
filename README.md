@@ -1,7 +1,7 @@
 # js_compilator
 
 to run:
-``make``
+```make```
 
 to clean:
 ``make clean``
