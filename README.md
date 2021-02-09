@@ -1,10 +1,7 @@
 # js_compilator
 
-to run:
-`make`
+To run :  `make`
 
-to clean:
-``make clean``
+To clean useless files :  `make clean`
 
-to clear all generated files:
-``make clear``
+To clear all generated files :  `make clear`
