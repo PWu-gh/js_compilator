@@ -1,4 +1,4 @@
-# js_compilator
+# Javascript Compilator using C and Flex/Bison
 
 To run :  `make`
 
