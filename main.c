@@ -5,14 +5,26 @@
 #include <stdio.h> /* printf */
 #include <stdlib.h> /* exit */
 
-int main(void)
+int main(int argc, char* argv[])
 {
-    
-    if (yyparse()==0) { /* yyparse calls yylex */
-        printf("\nParsing:: syntax OK\n"); /* reached if parsing folllows the grammar */
+
+    if(argc > 1){
+        FILE * outputFile;
+        outputFile = freopen( argv[1], "w", stdout); // redirect stdout dans le fichier
+        
+        if (yyparse()==0) { /* yyparse calls yylex */
+            printf("\nParsing:: syntax OK\n"); /* reached if parsing follows the grammar */
+
+        }
+        fclose(outputFile);
+    }
+    else{
+        if (yyparse()==0) { /* yyparse calls yylex */
+            printf("\nParsing:: syntax OK\n"); 
+        }
     }
 
+
+
     exit(EXIT_SUCCESS);
-
-
 }
