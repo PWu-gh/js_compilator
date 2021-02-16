@@ -14,6 +14,6 @@ int main(void)
 
     exit(EXIT_SUCCESS);
     
-    //fuuck you up
-    // two times
+
+
 }
