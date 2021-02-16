@@ -1,6 +1,0 @@
-lex::NOMBRE 5
-lex::char +
-lex::NOMBRE 5
-lex::PT_VIRG ;
-
-Parsing:: syntax OK

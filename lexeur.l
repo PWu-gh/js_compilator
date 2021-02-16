@@ -16,4 +16,4 @@
 . { printf("lex::char %s\n",yytext); return yytext[0]; } /* other one-char = token, ex. '+' */
 
 
-%%
+%% 
