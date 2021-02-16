@@ -7,27 +7,25 @@
     int yyerror(const char*); /* same for bison */
 %}
 
+
 %token NOMBRE
-%start resultat /* axiom */
+
+%left '+' '-'
+%left '*' '/'
+%nonassoc MOINSU
 
 %%
 
-resultat: expression ;
+resultat: 
+expression;
 
 expression:
-expression '+' terme
-| expression '-' terme
-| terme
-;
-
-terme:
-terme '*' facteur
-| facteur
-;
-
-facteur:
+expression '+' expression
+| expression '-' expression
+| expression '*' expression
+| expression '/' expression
 | '(' expression ')'
-| '-' facteur
+| '-' expression %prec MOINSU
 | NOMBRE
 ;
 
