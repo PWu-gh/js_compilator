@@ -9,7 +9,7 @@
 
 %%
 
-0|[1-9][0-9]* { printf("lex::NOMBRE %s\n",yytext); return NOMBRE; }
+0|[1-9][0-9]*(.[0-9]+)? { printf("lex::NOMBRE %s\n",yytext); return NOMBRE; }
 [ \t\n] { ; } /* ignore space, tab, and line return */
 ";" { printf("lex::PT_VIRG %s\n",yytext); return PT_VIRG; }
 
