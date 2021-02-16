@@ -7,8 +7,12 @@
     int yyerror(const char*); /* same for bison */
 %}
 
+
 %token NOMBRE PT_VIRG
-%start resultat /* axiom */
+
+%left '+' '-'
+%left '*' '/'
+%nonassoc MOINSU
 
 
 %%
@@ -19,19 +23,12 @@ expression PT_VIRG
 ;
 
 expression:
-expression '+' terme
-| expression '-' terme
-| terme
-;
-
-terme:
-terme '*' facteur
-| facteur
-;
-
-facteur:
-'(' expression ')'
-| '-' facteur
+expression '+' expression
+| expression '-' expression
+| expression '*' expression
+| expression '/' expression
+| '(' expression ')'
+| '-' expression %prec MOINSU
 | NOMBRE
 ;
 
