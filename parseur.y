@@ -22,6 +22,7 @@ expression PT_VIRG
 |expression PT_VIRG resultat
 ;
 
+
 expression:
 expression '+' expression
 | expression '-' expression
