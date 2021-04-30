@@ -4,13 +4,14 @@
 /* usage: ./main < input.txt */
 #include <stdio.h> /* printf */
 #include <stdlib.h> /* exit */
+//#include "parseur.tab.h"
 
 int main(int argc, char* argv[])
 {
 
     if(argc > 1){
         FILE * outputFile;
-        outputFile = freopen( argv[1], "w", stdout); // redirect stdout dans le fichier
+        outputFile = freopen( argv[1], "r", stdin); // redirect stdout dans le fichier
         
         if (yyparse()==0) { /* yyparse calls yylex */
             printf("\nParsing:: syntax OK\n"); /* reached if parsing follows the grammar */
@@ -19,6 +20,7 @@ int main(int argc, char* argv[])
         fclose(outputFile);
     }
     else{
+        printf("\nParsing:: syntax OK\n"); 
         if (yyparse()==0) { /* yyparse calls yylex */
             printf("\nParsing:: syntax OK\n"); 
         }

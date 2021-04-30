@@ -12,8 +12,7 @@ prog :
 	flex lexeur.l
 	gcc -o prog main.c parseur.tab.c lex.yy.c
 	make clean
-	./prog
-#./prog.exe out.txt
+	./prog  test.txt
 
 clean : 
 	-$(RM) *.o *.h *.tab.c lex.yy.c
