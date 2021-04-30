@@ -7,7 +7,6 @@
     int yyerror(const char*); /* same for bison */
 %}
 
-
 %token NOMBRE PT_VIRG
 
 %left '+' '-'
