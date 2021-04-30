@@ -10,14 +10,14 @@ int main(int argc, char* argv[])
 {
 
     if(argc > 1){
-        FILE * outputFile;
-        outputFile = freopen( argv[1], "r", stdin); // redirect stdout dans le fichier
+        FILE * inputFile;
+        inputFile = freopen( argv[1], "r", stdin); // redirect stdout dans le fichier
         
         if (yyparse()==0) { /* yyparse calls yylex */
             printf("\nParsing:: syntax OK\n"); /* reached if parsing follows the grammar */
 
         }
-        fclose(outputFile);
+        fclose(inputFile);
     }
     else{
         printf("\nParsing:: syntax OK\n"); 
