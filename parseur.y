@@ -9,22 +9,23 @@
     int yyerror(const char*); /* same for bison */
 %}
   
-%token NOMBRE
+
 %start resultat  
-
-/* %union { double dval; int ival; char * str;} 
-%token <str> NOMBRE
-%type <ival> expression */
-
+%token NOMBRE PT_VIRG
 
 %left '+' '-'
 %left '*' '/'
 %nonassoc MOINSU
 
+
 %%
 
 resultat: 
     expression { printf("Resultat= %d\n", $1); }
+    |expression PT_VIRG
+    |expression PT_VIRG resultat
+;
+
 
 expression:
     expression '+' expression       { $$ = $1+$3; }
@@ -34,7 +35,9 @@ expression:
     | '(' expression ')'            { $$ = $2; }
     | '-' expression %prec MOINSU   { $$ = -$2; }
     | NOMBRE                        { $$ = $1; }
-    ;
+;
+
+
 
 
 %%
