@@ -17,7 +17,7 @@
 
 %union {
   struct _tree* exp;
-  int num;
+  double num;
 } ;
 
 %type  <exp> expression

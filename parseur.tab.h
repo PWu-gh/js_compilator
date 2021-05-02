@@ -55,7 +55,7 @@ typedef union YYSTYPE
 #line 18 "parseur.y"
 
   struct _tree* exp;
-  int num;
+  double num;
 
 
 

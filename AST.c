@@ -21,7 +21,7 @@ AST newUnaryAST(char car, AST son)
 }
 
 /* create an AST leaf from a value */
-AST newLeafAST(int val)
+AST newLeafAST(double val)
 {
   AST t=(struct _tree*) malloc(sizeof(struct _tree));
   if (t!=NULL){	/* malloc ok */
@@ -49,7 +49,7 @@ void printAST(AST t)
     printf("[ ");
     printAST(t->left);
     /* check if node is car|val */
-    if (t->left==NULL) printf(":%d: ",t->val); else printf(":%c: ",t->car);
+    if (t->left==NULL) printf(":%f: ",t->val); else printf(":%c: ",t->car);
     printAST(t->right);
     printf("] ");
   }
