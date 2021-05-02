@@ -33,7 +33,7 @@
 
 resultat: 
   expression PT_VIRG  { *pT = $1; }
-  |expression PT_VIRG resultat
+  |expression PT_VIRG resultat { *pT = $1; }
 ;
 
 

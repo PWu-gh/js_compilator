@@ -40,7 +40,8 @@
       know about them.  */
    enum yytokentype {
      NOMBRE = 258,
-     MOINSU = 259
+     PT_VIRG = 259,
+     MOINSU = 260
    };
 #endif
 
@@ -59,7 +60,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 63 "parseur.tab.h"
+#line 64 "parseur.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
