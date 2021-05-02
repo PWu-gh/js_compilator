@@ -2,13 +2,26 @@
 /* compilation: bison -d parseur.y */
 /* result: parseur.tab.c = C code for syntaxic analyser */
 /* result: parseur.tab.h = def. of lexical units aka lexems */
+
+/* comlements: https://www.gnu.org/software/bison/manual/html_node/Parser-Function.html */
+/* about implicit call: https://stackoverflow.com/questions/20106574/simple-yacc-grammars-give-an-error */
+
 %{
-    int yylex(void); /* -Wall : avoid implicit call */
-    int yyerror(const char*); /* same for bison */
+ #include <stdio.h>	/* printf REMOVE AFTER TEST */
+ #include "AST.h"
+ int yylex(void);	/* flex with -Wall (implicite call) */
+ int yyerror(struct _tree**, const char*); /* same for bison */
 %}
 
+%parse-param {struct _tree* *pT} // yyparse(&t) call => *pT = *(&t) = t 
 
-%token NOMBRE
+%union {
+  struct _tree* exp;
+  int num;
+} ;
+
+%type  <exp> expression
+%token <num> NOMBRE
 
 %left '+' '-'
 %left '*' '/'
@@ -16,21 +29,21 @@
 
 %%
 
-resultat: 
-expression;
+resultat:   expression		{ *pT = $1; }
 
-expression:
-expression '+' expression
-| expression '-' expression
-| expression '*' expression
-| expression '/' expression
-| '(' expression ')'
-| '-' expression %prec MOINSU
-| NOMBRE
-;
+expression: 
+    expression '+' expression	{ $$ = newBinaryAST('+',$1,$3); }
+  | expression '-' expression	{ $$ = newBinaryAST('-',$1,$3); }
+  | expression '*' expression	{ $$ = newBinaryAST('*',$1,$3); }
+  | expression '/' expression	{ $$ = newBinaryAST('/',$1,$3); }
+  | '(' expression ')'		{ $$ = $2; }
+  | '-' expression %prec MOINSU	{ $$ = newUnaryAST('-',$2); }
+  | NOMBRE			{ $$ = newLeafAST($1); } 
+  ;
 
 %%
 
-#include <stdio.h> /* printf */
-int yyerror(const char *msg){ printf("Parsing:: syntax error\n"); return 1;}
+#include <stdio.h>	/* printf */
+int yyerror(struct _tree **pT, const char *msg){ printf("Parsing:: syntax error\n"); return 1;}
 int yywrap(void){ return 1; } /* stop reading flux yyin */
+

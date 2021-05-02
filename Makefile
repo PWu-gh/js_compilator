@@ -15,8 +15,8 @@ prog :
 	./prog.exe
 
 clean : 
-	-$(RM) *.o *.h *.tab.c lex.yy.c
+	-$(RM) *.o  *.tab.c lex.yy.c
 
 clear : 
-	-$(RM) *.o *.h *.tab.c lex.yy.c *.exe *.txt
+	-$(RM) *.o *.tab.c lex.yy.c *.exe 
 
