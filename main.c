@@ -8,18 +8,39 @@
 #include "parseur.tab.h"/* header for TOKEN */
 #include "AST.c"	/* AST fonctions */
 
-int main(void)
+int main(int argc, char* argv[])
 {
-  AST t; 				/* &t allows to modifie the tree */
-  if ((yyparse(&t)==0)) { 		/* yyparse calls yylex */
-    printf("\nParsing:: syntax OK\n\n");/* reached if parsing folllows the grammar */
-    
-    /* print the obtained tree */
-    if (t->left!=NULL) printf("Root symbol:: %c\n", t->car);	/* check if car at root */
-    printAST(t); printf("\n");
-    		
-    freeAST(t);
-  } 
-  exit(EXIT_SUCCESS);
+
+    if(argc > 1){
+        FILE * inputFile;
+        inputFile = freopen( argv[1], "r", stdin); // redirect stdout dans le fichier
+        
+        AST t; 				/* &t allows to modifie the tree */
+        if ((yyparse(&t)==0)) { 		/* yyparse calls yylex */
+			printf("\nParsing:: syntax OK\n\n");/* reached if parsing folllows the grammar */
+			
+			/* print the obtained tree */
+			if (t->left!=NULL) printf("Root symbol:: %c\n", t->car);	/* check if car at root */
+			printAST(t); printf("\n");
+				
+			freeAST(t);
+        } 
+        fclose(inputFile);
+    }
+    else{
+        AST t; 				/* &t allows to modifie the tree */
+        if ((yyparse(&t)==0)) { 		/* yyparse calls yylex */
+			printf("\nParsing:: syntax OK\n\n");/* reached if parsing folllows the grammar */
+			
+			/* print the obtained tree */
+			if (t->left!=NULL) printf("Root symbol:: %c\n", t->car);	/* check if car at root */
+			printAST(t); printf("\n");
+				
+			freeAST(t);
+        } 
+    }
+
+
+    exit(EXIT_SUCCESS);
 }
 

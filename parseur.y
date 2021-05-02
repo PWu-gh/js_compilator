@@ -22,14 +22,20 @@
 
 %type  <exp> expression
 %token <num> NOMBRE
+%token PT_VIRG
 
 %left '+' '-'
 %left '*' '/'
 %nonassoc MOINSU
 
+
 %%
 
-resultat:   expression		{ *pT = $1; }
+resultat: 
+  expression PT_VIRG  { *pT = $1; }
+  |expression PT_VIRG resultat
+;
+
 
 expression: 
     expression '+' expression	{ $$ = newBinaryAST('+',$1,$3); }
@@ -40,6 +46,8 @@ expression:
   | '-' expression %prec MOINSU	{ $$ = newUnaryAST('-',$2); }
   | NOMBRE			{ $$ = newLeafAST($1); } 
   ;
+
+
 
 %%
 
