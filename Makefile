@@ -18,5 +18,5 @@ clean :
 	-$(RM) *.o  *.tab.c lex.yy.c
 
 clear : 
-	-$(RM) *.o *.tab.c lex.yy.c *.exe 
+	-$(RM) *.o *.tab.c lex.yy.c *.exe *.jsm
 
