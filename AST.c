@@ -49,9 +49,45 @@ void printAST(AST t)
     printf("[ ");
     printAST(t->left);
     /* check if node is car|val */
-    if (t->left==NULL) printf(":%d: ",t->val); else printf(":%c: ",t->car);
+    if (t->left==NULL) printf("%d ",t->val); 
+    else printf("%c ",t->car);
     printAST(t->right);
     printf("] ");
   }
 }
 
+void newPrintAST(AST t)
+{
+	if (t!=NULL) {
+		printf(" [");
+		newPrintAST(t->left);
+		if (t->left==NULL) printf("CsteNb %d",t->val); 
+		else {
+			switch (t->car)
+			{
+			case '+':
+				printf("AddiNb");
+				break;
+			case '*':
+				printf("MultNb");
+				break;
+			case '-':
+				if(t->right == NULL) printf("NegaNb ");
+				else printf("SubiNb");
+				break;
+			case '/':
+				printf("DiviNb");
+				break;
+			
+			default:
+				// symbole non implemente
+				printf("%c ",t->car);
+				break;
+			}
+		}
+		newPrintAST(t->right);
+
+		printf("] ");
+
+	}
+}
