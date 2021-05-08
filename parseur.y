@@ -13,20 +13,24 @@
  int yyerror(struct _tree**, const char*); /* same for bison */
 %}
 
-%parse-param {struct _tree* *pT} // yyparse(&t) call => *pT = *(&t) = t 
+
 
 %union {
   struct _tree* exp;
-  int num;
-} ;
+  double doubleVal;
+};
+
+%parse-param {struct _tree* *pT} // yyparse(&t) call => *pT = *(&t) = t 
+
 
 %type  <exp> expression
-%token <num> NOMBRE
+%token <doubleVal> NOMBRE
 %token PT_VIRG
 
 %left '+' '-'
 %left '*' '/'
 %nonassoc MOINSU
+
 
 
 %%
@@ -46,6 +50,7 @@ expression:
   | '-' expression %prec MOINSU	{ $$ = newUnaryAST('-',$2); }
   | NOMBRE			{ $$ = newLeafAST($1); } 
   ;
+
 
 
 
