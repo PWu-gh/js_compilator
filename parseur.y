@@ -8,7 +8,8 @@
 %}
 
 
-%token NOMBRE PT_VIRG
+%token NOMBRE PT_VIRG 
+%token BOOLEAN EQ SUPEQ
 
 %left '+' '-'
 %left '*' '/'
@@ -23,6 +24,7 @@ expression PT_VIRG
 ;
 
 
+
 expression:
 expression '+' expression
 | expression '-' expression
@@ -31,8 +33,15 @@ expression '+' expression
 | '(' expression ')'
 | '-' expression %prec MOINSU
 | NOMBRE
+| bool_op
 ;
 
+bool_op:
+    BOOLEAN
+    | expression EQ expression
+    | expression SUPEQ expression
+
+;
 
 
 %%

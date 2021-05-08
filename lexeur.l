@@ -13,6 +13,10 @@
 [ \t\n] { ; } /* ignore space, tab, and line return */
 ";" { printf("lex::PT_VIRG %s\n",yytext); return PT_VIRG; }
 
+"True"|"False" { printf("lex::BOOLEAN %s\n",yytext); return BOOLEAN; }
+"==" { printf("lex::BOOL_OP %s\n",yytext); return EQ; }
+">=" { printf("lex::BOOL_OP %s\n",yytext); return SUPEQ; }
+
 . { printf("lex::char %s\n",yytext); return yytext[0]; } /* other one-char = token, ex. '+' */
 
 
