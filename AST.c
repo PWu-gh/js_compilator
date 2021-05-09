@@ -26,6 +26,18 @@ AST newLeafAST(double val)
   AST t=(struct _tree*) malloc(sizeof(struct _tree));
   if (t!=NULL){	/* malloc ok */
     t->val=val;
+    t->car = 0;
+    t->left=NULL;
+    t->right=NULL;
+  } else printf("MALLOC! ");
+  return t;
+}
+
+AST newLeafASTchar(char car)
+{
+  AST t=(struct _tree*) malloc(sizeof(struct _tree));
+  if (t!=NULL){	/* malloc ok */
+    t->car=car;
     t->left=NULL;
     t->right=NULL;
   } else printf("MALLOC! ");
@@ -49,7 +61,12 @@ void printAST(AST t)
     printf("[ ");
     printAST(t->left);
     /* check if node is car|val */
-    if (t->left==NULL) printf("%f ",t->val); 
+    if (t->left==NULL){
+      if(t->car == 0)
+        printf("%f ",t->val); 
+      else
+        printf("%c ",t->car); 
+    }
     else printf("%c ",t->car);
     printAST(t->right);
     printf("] ");
@@ -61,7 +78,12 @@ void newPrintAST(AST t)
 	if (t!=NULL) {
 		printf(" [");
 		newPrintAST(t->left);
-		if (t->left==NULL) printf("CsteNb %f",t->val); 
+    if (t->left==NULL) {
+      if(t->car == 0)
+        printf("CsteNb %f",t->val); 
+      else
+        printf("CsteBo %c",t->car); 
+    }
 		else {
 
 			switch (t->car)

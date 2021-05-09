@@ -19,6 +19,7 @@ AST newUnaryAST(char car, AST son);
 
 /* create an AST leaf from a value */
 AST newLeafAST(double val);
+AST newLeafASTchar(char car);
 
 /* delete an AST */
 void freeAST(AST t);
