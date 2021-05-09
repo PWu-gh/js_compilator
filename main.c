@@ -5,9 +5,12 @@
 #include <stdio.h> /* printf */
 #include <stdlib.h> /* exit */
 //#include "parseur.tab.h"
+#include <stdbool.h>
 
 int main(int argc, char* argv[])
 {
+    bool test = (5*5) == true;
+    printf("%d", test);
 
     if(argc > 1){
         FILE * inputFile;
