@@ -63,6 +63,7 @@ void newPrintAST(AST t)
 		newPrintAST(t->left);
 		if (t->left==NULL) printf("CsteNb %f",t->val); 
 		else {
+
 			switch (t->car)
 			{
 			case '+':
@@ -78,7 +79,30 @@ void newPrintAST(AST t)
 			case '/':
 				printf("DiviNb");
 				break;
-			
+
+      // bool
+      case 'E': // ""
+				printf("Equals");
+				break;
+      case '!': // !
+				printf("Not");
+				break;
+      case 'N': //!=
+				printf("NotEql");
+				break;
+			case '<': // <
+				printf("LoStNb");
+				break;
+      case 'L': // <=
+				printf("LoEqNb");
+				break;
+      case '>': // >
+				printf("GrStNb");
+				break;
+      case 'G': // >=
+				printf("GrEqNb");
+				break;
+
 			default:
 				// symbole non implemente
 				printf("%c ",t->car);
@@ -88,6 +112,9 @@ void newPrintAST(AST t)
 		newPrintAST(t->right);
 
 		printf("] ");
-
 	}
+}
+
+void compute(AST t){
+  
 }

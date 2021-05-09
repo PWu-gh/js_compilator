@@ -41,7 +41,15 @@
    enum yytokentype {
      NOMBRE = 258,
      PT_VIRG = 259,
-     MOINSU = 260
+     BOOLEAN = 260,
+     GrEqNb = 261,
+     GrStNb = 262,
+     LoEqNb = 263,
+     LoStNb = 264,
+     NotEql = 265,
+     Not = 266,
+     Equals = 267,
+     MOINSU = 268
    };
 #endif
 
@@ -56,11 +64,12 @@ typedef union YYSTYPE
 
   struct _tree* exp;
   double doubleVal;
+  char * str;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 64 "parseur.tab.h"
+#line 73 "parseur.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

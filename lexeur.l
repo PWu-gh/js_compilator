@@ -10,6 +10,17 @@
 %%
 
 0|[1-9][0-9]*(\.[0-9]+)? { printf("lex::NOMBRE %s\n",yytext); yylval.doubleVal=atof(yytext);  return NOMBRE; }
+
+"True"|"False" { printf("lex::BOOLEAN %s\n",yytext); yylval.str=yytext; return BOOLEAN; }
+"==" { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return Equals; }
+"!" { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return Not; }
+"!=" { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return NotEql; }
+"<" { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return LoStNb; }
+"<=" { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return LoEqNb; }
+">" { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return GrStNb; }
+">=" { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return GrEqNb; }
+
+
 [ \t\n] { ; } /* ignore space, tab, and line return */
 ";" { printf("lex::PT_VIRG %s\n\n",yytext); return PT_VIRG; }
 

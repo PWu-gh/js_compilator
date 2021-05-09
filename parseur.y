@@ -18,15 +18,17 @@
 %union {
   struct _tree* exp;
   double doubleVal;
+  char * str;
 };
 
 %parse-param {struct _tree* *pT} // yyparse(&t) call => *pT = *(&t) = t 
 
 
-%type  <exp> expression
-%token <doubleVal> NOMBRE
-%token PT_VIRG
+%type  <exp> expression bool_op
+%token <doubleVal> NOMBRE 
+%token PT_VIRG BOOLEAN
 
+%left Equals Not NotEql LoStNb LoEqNb GrStNb GrEqNb
 %left '+' '-'
 %left '*' '/'
 %nonassoc MOINSU
@@ -36,27 +38,37 @@
 %%
 
 resultat: 
-  expression PT_VIRG  { *pT = $1; }
-  |expression PT_VIRG resultat { *pT = $1; }
+    expression PT_VIRG  { *pT = $1; }
+    |expression PT_VIRG resultat { *pT = $1; }
 ;
 
 
 expression: 
     expression '+' expression	{ $$ = newBinaryAST('+',$1,$3); }
-  | expression '-' expression	{ $$ = newBinaryAST('-',$1,$3); }
-  | expression '*' expression	{ $$ = newBinaryAST('*',$1,$3); }
-  | expression '/' expression	{ $$ = newBinaryAST('/',$1,$3); }
-  | '(' expression ')'		{ $$ = $2; }
-  | '-' expression %prec MOINSU	{ $$ = newUnaryAST('-',$2); }
-  | NOMBRE			{ $$ = newLeafAST($1); } 
-  ;
+    | expression '-' expression	{ $$ = newBinaryAST('-',$1,$3); }
+    | expression '*' expression	{ $$ = newBinaryAST('*',$1,$3); }
+    | expression '/' expression	{ $$ = newBinaryAST('/',$1,$3); }
+    | '(' expression ')'		{ $$ = $2; }
+    | '-' expression %prec MOINSU	{ $$ = newUnaryAST('-',$2); }
+    | NOMBRE			{ $$ = newLeafAST($1); } 
+    | bool_op
+;
 
+bool_op:
+    BOOLEAN                         
+    | expression Equals expression  { $$ = newBinaryAST('E',$1,$3);}
+    | Not expression                { $$ = newUnaryAST('!',$2); }
+    | expression NotEql expression  { $$ = newBinaryAST('N',$1,$3); }
+    | expression LoStNb expression  { $$ = newBinaryAST('<',$1,$3); }
+    | expression LoEqNb expression  { $$ = newBinaryAST('L',$1,$3); }
+    | expression GrStNb expression  { $$ = newBinaryAST('>',$1,$3); }
+    | expression GrEqNb expression  { $$ = newBinaryAST('G',$1,$3); }
+;
 
 
 
 %%
 
-#include <stdio.h>	/* printf */
 int yyerror(struct _tree **pT, const char *msg){ printf("Parsing:: syntax error\n"); return 1;}
 int yywrap(void){ return 1; } /* stop reading flux yyin */
 
