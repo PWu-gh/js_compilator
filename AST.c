@@ -137,6 +137,6 @@ void newPrintAST(AST t)
 	}
 }
 
-void compute(AST t){
+void computeAST(AST t){
   
 }

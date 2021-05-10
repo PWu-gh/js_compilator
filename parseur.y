@@ -24,7 +24,7 @@
 %parse-param {struct _tree* *pT} // yyparse(&t) call => *pT = *(&t) = t 
 
 
-%type  <exp> expression 
+%type  <exp> expression Bool_exp
 %token <doubleVal> NOMBRE 
 %token PT_VIRG 
 %token <str> BOOLEAN
@@ -52,7 +52,11 @@ expression:
     | '(' expression ')'		{ $$ = $2; }
     | '-' expression %prec MOINSU	{ $$ = newUnaryAST('-',$2); }
     | NOMBRE			{ $$ = newLeafAST($1); } 
-    | BOOLEAN           { $$ = newLeafASTchar($1[0]);} 
+    | Bool_exp
+;
+
+Bool_exp:
+    BOOLEAN                         { $$ = newLeafASTchar($1[0]);} 
     | expression Equals expression  { $$ = newBinaryAST('E',$1,$3);}
     | Not expression                { $$ = newUnaryAST('!',$2); }
     | expression NotEql expression  { $$ = newBinaryAST('N',$1,$3); }
@@ -61,7 +65,6 @@ expression:
     | expression GrStNb expression  { $$ = newBinaryAST('>',$1,$3); }
     | expression GrEqNb expression  { $$ = newBinaryAST('G',$1,$3); }
 ;
-
 
 %%
 
