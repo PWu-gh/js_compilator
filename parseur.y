@@ -27,13 +27,16 @@
 %type  <exp> expression Bool_exp
 %token <doubleVal> NOMBRE 
 %token PT_VIRG 
-%token <str> BOOLEAN
+%token <str> BOOLEAN 
+%token <str> VAR
 %token Equals NotEql LoStNb LoEqNb GrStNb GrEqNb
 
 %left Equals NotEql LoStNb LoEqNb GrStNb GrEqNb
 %left '+' '-'
 %left '*' '/'
 %left Not 
+
+// %right '='
 %nonassoc MOINSU
 
 
@@ -42,7 +45,9 @@
 
 resultat: 
     expression PT_VIRG  { *pT = $1; }
-    |expression PT_VIRG resultat { *pT = $1; }
+    | expression PT_VIRG resultat { *pT = $1; }
+    // | Var_exp PT_VIRG  { *pT = $1; }
+    // | Var_exp PT_VIRG resultat { *pT = $1; }
 ;
 
 
@@ -55,6 +60,7 @@ expression:
     | '-' expression %prec MOINSU	{ $$ = newUnaryAST("-",$2); }
     | NOMBRE			{ $$ = newLeafAST($1); } 
     | Bool_exp
+    // | Var_exp
 ;
 
 Bool_exp:
@@ -67,6 +73,12 @@ Bool_exp:
     | expression GrStNb expression  { $$ = newBinaryAST(">",$1,$3); }
     | expression GrEqNb expression  { $$ = newBinaryAST(">=",$1,$3); }
 ;
+
+// Var_exp:
+//     VAR                     { $$ = newLeafVar($1);}
+//     | Var_exp '=' expression    { $$ = newBinaryAST("=",$3,$1);}
+//     | Var_exp '=' Var_exp    { $$ = newBinaryAST("=",$3,$1);}
+// ;
 
 %%
 

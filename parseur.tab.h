@@ -42,14 +42,15 @@
      NOMBRE = 258,
      PT_VIRG = 259,
      BOOLEAN = 260,
-     Equals = 261,
-     NotEql = 262,
-     LoStNb = 263,
-     LoEqNb = 264,
-     GrStNb = 265,
-     GrEqNb = 266,
-     Not = 267,
-     MOINSU = 268
+     VAR = 261,
+     Equals = 262,
+     NotEql = 263,
+     LoStNb = 264,
+     LoEqNb = 265,
+     GrStNb = 266,
+     GrEqNb = 267,
+     Not = 268,
+     MOINSU = 269
    };
 #endif
 
@@ -69,7 +70,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 73 "parseur.tab.h"
+#line 74 "parseur.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

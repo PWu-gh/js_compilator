@@ -53,6 +53,19 @@ AST newLeafBool(char* bool_str)
 	return t;
 }
 
+AST newLeafVar(char* variable)
+{
+	AST t=(struct _tree*) malloc(sizeof(struct _tree));
+	if(t!= NULL){
+		t->var = strdup(variable);
+		t->boo = NULL;
+		t->car = NULL;
+		t->left=NULL;
+		t->right=NULL;
+	}
+	else printf("MALLOC! ");
+	return t;
+}
 
 
 
@@ -73,10 +86,12 @@ void printAST(AST t)
 	printAST(t->left);
 	/* check if node is car|val */
 	if (t->left==NULL){
-		if(t->boo == NULL)
-			printf("%f ",t->val); 
+		if(t->boo != NULL)
+			printf( "%s ",t->boo); 
+		else if(t->var != NULL)
+			printf("%s ",t->var); 
 		else
-			printf("%s ",t->boo); 
+			printf("%f ",t->val); 
 	}
 	else printf("%s ",t->car);
 	printAST(t->right);
@@ -93,16 +108,23 @@ void genAssembly(AST t, char* filename){
 
     if (t->left!=NULL) genAssembly(t->left,filename); 
     if (t->right!=NULL) genAssembly(t->right,filename);
-    
-   
+
+	    
+	printf("\n TEST : %s", t->car);
 	if (t->left==NULL){
-		if(t->boo == NULL)
-			printf("CsteNb %f\n",t->val); 
-		else
+		if(t->boo != NULL)
 			printf( "CsteBo %s\n",t->boo); 
+		else if(t->var != NULL){
+			printf("SetVar %s\n",t->var); 
+	
+		}
+		else
+			printf("CsteNb %f\n",t->val); 
+			
 	}
-    
+
     else { // Write in
+		printf("\n TEST : %s", t->car);
 		if(!strcmp(t->car, "+"))
 			printf("AddiNb\n");
 		if(!strcmp(t->car, "*"))
@@ -128,6 +150,8 @@ void genAssembly(AST t, char* filename){
 			printf("LoEqNb\n");
 		if(!strcmp(t->car, "<"))
 			printf("LoStNb\n");
+		// variable
+
     }
     fclose(Jsm_file);
 }
