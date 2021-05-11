@@ -85,14 +85,9 @@ void printAST(AST t)
 }
 
 
-void genAssembly(AST t, char* filename){
-	// if filename != NULL, on ouvre et on redirige la sortie de printf
-	FILE* Jsm_file = filename ? freopen(filename,"a+", stdout) : NULL;
-
-	// fichier = freopen(file,"a+", stdout);
-
-    if (t->left!=NULL) genAssembly(t->left,filename); 
-    if (t->right!=NULL) genAssembly(t->right,filename);
+void genAssembly(AST t){
+    if (t->left != NULL) genAssembly(t->left); 
+    if (t->right!= NULL) genAssembly(t->right);
     
    
 	if (t->left==NULL){
@@ -129,6 +124,4 @@ void genAssembly(AST t, char* filename){
 		if(!strcmp(t->car, "<"))
 			printf("LoStNb\n");
     }
-    fclose(Jsm_file);
 }
-

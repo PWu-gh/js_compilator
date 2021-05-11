@@ -16,6 +16,7 @@ int main(int argc, char* argv[])
 {
     AST t; 				/* &t allows to modifie the tree */
     if(argc > 1){
+
         FILE * inputFile = freopen( argv[1], "r", stdin); // redirect entry val to file content
 
         
@@ -31,7 +32,9 @@ int main(int argc, char* argv[])
             // generate assembly code in Fname.jsm
             char* Fname = strcat(strtok(argv[1],"."),".jsm");
             remove(Fname);
-            genAssembly(t, Fname);
+            FILE* jsm_file = freopen(Fname,"a+", stdout);
+            genAssembly(t);
+            fclose(jsm_file);
 			freeAST(t);
         } 
         fclose(inputFile);
@@ -49,7 +52,7 @@ int main(int argc, char* argv[])
             /* print Assembly code of the obtained tree */
             printf("\n\n_______________________\n");
             printf("Assembly : \n\n");
-            genAssembly(t, NULL); // gen dans terminal
+            genAssembly(t); // gen dans terminal
 
             /* print the obtained tree */
             printf("\n_______________________\n");
