@@ -28,10 +28,12 @@
 %token <doubleVal> NOMBRE 
 %token PT_VIRG 
 %token <str> BOOLEAN
+%token Equals NotEql LoStNb LoEqNb GrStNb GrEqNb
 
-%left Equals Not NotEql LoStNb LoEqNb GrStNb GrEqNb
+%left Equals NotEql LoStNb LoEqNb GrStNb GrEqNb Not
 %left '+' '-'
 %left '*' '/'
+// %left Not
 %nonassoc MOINSU
 
 
@@ -45,25 +47,25 @@ resultat:
 
 
 expression: 
-    expression '+' expression	{ $$ = newBinaryAST('+',$1,$3); }
-    | expression '-' expression	{ $$ = newBinaryAST('-',$1,$3); }
-    | expression '*' expression	{ $$ = newBinaryAST('*',$1,$3); }
-    | expression '/' expression	{ $$ = newBinaryAST('/',$1,$3); }
+    expression '+' expression	{ $$ = newBinaryAST("+",$1,$3); }
+    | expression '-' expression	{ $$ = newBinaryAST("-",$1,$3); }
+    | expression '*' expression	{ $$ = newBinaryAST("*",$1,$3); }
+    | expression '/' expression	{ $$ = newBinaryAST("/",$1,$3); }
     | '(' expression ')'		{ $$ = $2; }
-    | '-' expression %prec MOINSU	{ $$ = newUnaryAST('-',$2); }
+    | '-' expression %prec MOINSU	{ $$ = newUnaryAST("-",$2); }
     | NOMBRE			{ $$ = newLeafAST($1); } 
     | Bool_exp
 ;
 
 Bool_exp:
-    BOOLEAN                         { $$ = newLeafASTchar($1[0]);} 
-    | expression Equals expression  { $$ = newBinaryAST('E',$1,$3);}
-    | Not expression                { $$ = newUnaryAST('!',$2); }
-    | expression NotEql expression  { $$ = newBinaryAST('N',$1,$3); }
-    | expression LoStNb expression  { $$ = newBinaryAST('<',$1,$3); }
-    | expression LoEqNb expression  { $$ = newBinaryAST('L',$1,$3); }
-    | expression GrStNb expression  { $$ = newBinaryAST('>',$1,$3); }
-    | expression GrEqNb expression  { $$ = newBinaryAST('G',$1,$3); }
+    BOOLEAN                         { $$ = newLeafBool($1);} 
+    | expression Equals expression  { $$ = newBinaryAST("==",$1,$3);}
+    | Not expression                { $$ = newUnaryAST("!",$2); }
+    | expression NotEql expression  { $$ = newBinaryAST("!=",$1,$3); }
+    | expression LoStNb expression  { $$ = newBinaryAST("<",$1,$3); }
+    | expression LoEqNb expression  { $$ = newBinaryAST("<=",$1,$3); }
+    | expression GrStNb expression  { $$ = newBinaryAST(">",$1,$3); }
+    | expression GrEqNb expression  { $$ = newBinaryAST(">=",$1,$3); }
 ;
 
 %%

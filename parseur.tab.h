@@ -42,13 +42,13 @@
      NOMBRE = 258,
      PT_VIRG = 259,
      BOOLEAN = 260,
-     GrEqNb = 261,
-     GrStNb = 262,
-     LoEqNb = 263,
-     LoStNb = 264,
-     NotEql = 265,
-     Not = 266,
-     Equals = 267,
+     Equals = 261,
+     NotEql = 262,
+     LoStNb = 263,
+     LoEqNb = 264,
+     GrStNb = 265,
+     GrEqNb = 266,
+     Not = 267,
      MOINSU = 268
    };
 #endif
