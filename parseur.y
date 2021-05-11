@@ -30,10 +30,10 @@
 %token <str> BOOLEAN
 %token Equals NotEql LoStNb LoEqNb GrStNb GrEqNb
 
-%left Equals NotEql LoStNb LoEqNb GrStNb GrEqNb Not
+%left Equals NotEql LoStNb LoEqNb GrStNb GrEqNb
 %left '+' '-'
 %left '*' '/'
-// %left Not
+%left Not 
 %nonassoc MOINSU
 
 
@@ -60,7 +60,7 @@ expression:
 Bool_exp:
     BOOLEAN                         { $$ = newLeafBool($1);} 
     | expression Equals expression  { $$ = newBinaryAST("==",$1,$3);}
-    | Not expression                { $$ = newUnaryAST("!",$2); }
+    | Not expression %prec MOINSU   { $$ = newUnaryAST("!",$2);}
     | expression NotEql expression  { $$ = newBinaryAST("!=",$1,$3); }
     | expression LoStNb expression  { $$ = newBinaryAST("<",$1,$3); }
     | expression LoEqNb expression  { $$ = newBinaryAST("<=",$1,$3); }

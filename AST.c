@@ -8,9 +8,10 @@ AST newBinaryAST(char* car, AST left, AST right)
 {
   AST t=(struct _tree*) malloc(sizeof(struct _tree));
   if (t!=NULL){	/* malloc ok */
-    t->car=car;
-    t->left=left;
-    t->right=right;
+    t->car = car;
+	t->boo = NULL;
+    t->left = left;
+    t->right = right;
   } 
   else printf("MALLOC! ");
   return t;
@@ -27,7 +28,9 @@ AST newLeafAST(double val)
 {
   AST t=(struct _tree*) malloc(sizeof(struct _tree));
   if (t!=NULL){	/* malloc ok */
-    t->val=val;
+    t->val = val;
+	t->car = NULL;
+	t->boo = NULL;
     t->left=NULL;
     t->right=NULL;
   } 
@@ -39,7 +42,10 @@ AST newLeafBool(char* bool_str)
 {
 	AST t=(struct _tree*) malloc(sizeof(struct _tree));
 	if(t!= NULL){
-		t->boo = (bool_str == "True") ? "True": "False";
+
+		// (strcmp(bool_str , "True")==0) = equals
+		t->boo = (!strcmp(bool_str , "True")) ? "True": "False";
+		t->car = NULL;
 		t->left=NULL;
 		t->right=NULL;
 	}
@@ -79,55 +85,50 @@ void printAST(AST t)
 }
 
 
+void genAssembly(AST t, char* filename){
+	// if filename != NULL, on ouvre et on redirige la sortie de printf
+	FILE* Jsm_file = filename ? freopen(filename,"a+", stdout) : NULL;
 
-void codeExtension(AST t, char* file){
-	FILE* fichier = NULL;
-	fichier = fopen(file,"a+");
+	// fichier = freopen(file,"a+", stdout);
 
-    if (t->left!=NULL) codeExtension(t->left,file); 
-    if (t->right!=NULL) codeExtension(t->right,file);
+    if (t->left!=NULL) genAssembly(t->left,filename); 
+    if (t->right!=NULL) genAssembly(t->right,filename);
     
    
 	if (t->left==NULL){
 		if(t->boo == NULL)
-			fprintf(fichier ,"CsteNb %f\n",t->val); 
+			printf("CsteNb %f\n",t->val); 
 		else
-			fprintf(fichier, "CsteBo %s\n",t->boo); 
+			printf( "CsteBo %s\n",t->boo); 
 	}
     
-    // else if (t->left != NULL && (t->right == NULL)){
-    // 	if(strcmp(t->car, "-") == 0)
-    // 		fprintf(fichier,"NegaNb \n");
-    // 	else if (strcmp(t->car, "!") == 0)
-    // 		fprintf(fichier,"Not \n");
-    // } 
     else { // Write in
-		if(!strcmp(t->car,"+"))
-			fprintf(fichier,"AddiNb\n");
-		else if(!strcmp(t->car,"*"))
-			fprintf(fichier,"MultNb\n");
-		else if(!strcmp(t->car,"-"))
-			if(t->right == NULL) printf("NegaNb ");
-			else printf("SubiNb");
-		else if(!strcmp(t->car,"/"))
-			fprintf(fichier,"DiviNb\n");
+		if(!strcmp(t->car, "+"))
+			printf("AddiNb\n");
+		if(!strcmp(t->car, "*"))
+			printf("MultNb\n");
+		if(!strcmp(t->car, "-"))
+			if(t->right == NULL) printf("NegaNb\n ");
+			else printf("SubiNb\n");
+		if(!strcmp(t->car, "/"))
+			printf("DiviNb\n");
 		// bool
-		else if(!strcmp(t->car,"=="))
-			fprintf(fichier,"Equals\n");
-		else if (strcmp(t->car, "!"))
-    		fprintf(fichier,"Not \n");
-		else if(!strcmp(t->car,"!="))
-			fprintf(fichier,"NoEql\n");
-		else if(!strcmp(t->car, ">="))
-			fprintf(fichier,"GrEqNb\n");
-		else if(!strcmp(t->car,">"))
-			fprintf(fichier,"GrStNb\n");
-		else if(!strcmp(t->car, "<="))
-			fprintf(fichier,"LoEqNb\n");
-		else if(!strcmp(t->car,"<"))
-			fprintf(fichier,"LoStNb\n");
+		if(!strcmp(t->car, "=="))
+			printf("Equals\n");
+		if (!strcmp(t->car, "!")){
+    		printf("Not \n");
+		}
+		if(!strcmp(t->car, "!="))
+			printf("NoEql\n");
+		if(!strcmp(t->car, ">="))
+			printf("GrEqNb\n");
+		if(!strcmp(t->car, ">"))
+			printf("GrStNb\n");
+		if(!strcmp(t->car, "<="))
+			printf("LoEqNb\n");
+		if(!strcmp(t->car, "<"))
+			printf("LoStNb\n");
     }
-    fclose(fichier);
+    fclose(Jsm_file);
 }
-
 
