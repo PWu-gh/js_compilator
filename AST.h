@@ -28,4 +28,6 @@ void freeAST(AST t);
 /* print an AST*/
 void printAST(AST t);
 
+void genAssembly(AST t);
+
 #endif // !_AST_H_

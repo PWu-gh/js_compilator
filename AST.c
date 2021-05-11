@@ -100,17 +100,11 @@ void printAST(AST t)
 }
 
 
-void genAssembly(AST t, char* filename){
-	// if filename != NULL, on ouvre et on redirige la sortie de printf
-	FILE* Jsm_file = filename ? freopen(filename,"a+", stdout) : NULL;
-
-	// fichier = freopen(file,"a+", stdout);
-
-    if (t->left!=NULL) genAssembly(t->left,filename); 
-    if (t->right!=NULL) genAssembly(t->right,filename);
-
-	    
-	printf("\n TEST : %s", t->car);
+void genAssembly(AST t){
+    if (t->left != NULL) genAssembly(t->left); 
+    if (t->right!= NULL) genAssembly(t->right);
+    
+   
 	if (t->left==NULL){
 		if(t->boo != NULL)
 			printf( "CsteBo %s\n",t->boo); 
@@ -124,14 +118,14 @@ void genAssembly(AST t, char* filename){
 	}
 
     else { // Write in
-		printf("\n TEST : %s", t->car);
 		if(!strcmp(t->car, "+"))
 			printf("AddiNb\n");
 		if(!strcmp(t->car, "*"))
 			printf("MultNb\n");
-		if(!strcmp(t->car, "-"))
+		if(!strcmp(t->car, "-")){
 			if(t->right == NULL) printf("NegaNb\n ");
 			else printf("SubiNb\n");
+		}
 		if(!strcmp(t->car, "/"))
 			printf("DiviNb\n");
 		// bool
@@ -153,6 +147,4 @@ void genAssembly(AST t, char* filename){
 		// variable
 
     }
-    fclose(Jsm_file);
 }
-

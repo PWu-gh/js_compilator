@@ -10,7 +10,7 @@ endif
 prog :
 	bison -d parseur.y
 	flex lexeur.l
-	gcc -o prog main.c parseur.tab.c lex.yy.c
+	gcc -Wall -o prog main.c parseur.tab.c lex.yy.c
 	make clean
 	./prog  test.txt
 
