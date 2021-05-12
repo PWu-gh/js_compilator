@@ -20,7 +20,6 @@ AST newUnaryAST(char* car, AST son);
 
 /* create an AST leaf from a value */
 AST newLeafAST(double val);
-AST newLeafCar(char* car);
 AST newLeafBool(char* bool_str);
 AST newLeafVar(char* variable);
 /* delete an AST */

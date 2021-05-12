@@ -7,38 +7,35 @@
 /* about implicit call: https://stackoverflow.com/questions/20106574/simple-yacc-grammars-give-an-error */
 
 %{
-    #include <stdio.h>	/* printf REMOVE AFTER TEST */
-    #include "AST.h"
-    int yylex(void);	/* flex with -Wall (implicite call) */
-    int yyerror(struct _tree**, const char*); /* same for bison */
+ #include <stdio.h>	/* printf REMOVE AFTER TEST */
+ #include "AST.h"
+ int yylex(void);	/* flex with -Wall (implicite call) */
+ int yyerror(struct _tree**, const char*); /* same for bison */
 %}
 
 
 
 %union {
-    struct _tree* exp;
-    double doubleVal;
-    char * str;
+  struct _tree* exp;
+  double doubleVal;
+  char * str;
 };
 
 %parse-param {struct _tree* *pT} // yyparse(&t) call => *pT = *(&t) = t 
 
 
-%type  <exp> command expression Bool_exp
+%type  <exp> expression Bool_exp Var_exp
 %token <doubleVal> NOMBRE 
 %token PT_VIRG 
 %token <str> BOOLEAN 
 %token <str> VAR
 %token Equals NotEql LoStNb LoEqNb GrStNb GrEqNb
 
-%right '='
-
+%left '='
 %left Equals NotEql LoStNb LoEqNb GrStNb GrEqNb
 %left '+' '-'
 %left '*' '/'
 %left Not 
-
-
 
 
 %nonassoc MOINSU
@@ -48,14 +45,12 @@
 %%
 
 resultat: 
-    command { *pT = $1; }
-    | command resultat { *pT = $1; }
+    expression PT_VIRG  { *pT = $1; }
+    | expression PT_VIRG resultat { *pT = $1; }
+    | Var_exp PT_VIRG  { *pT = $1; }
+    | Var_exp PT_VIRG resultat { *pT = $1; }
 ;
 
-command:
-    expression PT_VIRG  { $$ = $1;}
-
-;
 
 expression: 
     expression '+' expression	{ $$ = newBinaryAST("+",$1,$3); }
@@ -66,8 +61,7 @@ expression:
     | '-' expression %prec MOINSU	{ $$ = newUnaryAST("-",$2); }
     | NOMBRE			{ $$ = newLeafAST($1); } 
     | Bool_exp
-    | VAR                         { $$ = newLeafVar($1);}
-    | expression '=' expression    { $$ = newBinaryAST("=",$3, newUnaryAST($1->var, newLeafCar("bait"))); }
+    | Var_exp
 ;
 
 Bool_exp:
@@ -81,11 +75,11 @@ Bool_exp:
     | expression GrEqNb expression  { $$ = newBinaryAST(">=",$1,$3); }
 ;
 
-// Var_exp:
-//     VAR                         { $$ = newLeafVar($1);}
-//     | Var_exp '=' expression    { $$ = newBinaryAST("=",$3,$1);}
-// ;
-
+Var_exp:
+    VAR                         { $$ = newLeafVar($1);}
+    | Var_exp '=' expression    { $$ = newBinaryAST("=",$3,$1);}
+    | Var_exp '=' Var_exp       { $$ = newBinaryAST("=",$3,$1);}
+;
 
 %%
 

@@ -20,7 +20,7 @@
 ">" { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return GrStNb; }
 ">=" { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return GrEqNb; }
 
-[a-z][a-zA-Z0-9_]* { printf("lex::VAR %s\n",yytext); yylval.str=yytext; return VAR; }
+[a-z][a-zA-Z0-9_]+ { printf("lex::VAR %s\n",yytext); yylval.str=yytext; return VAR; }
 
 
 [ \t\n] { ; } /* ignore space, tab, and line return */

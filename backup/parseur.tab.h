@@ -63,9 +63,9 @@ typedef union YYSTYPE
 /* Line 1676 of yacc.c  */
 #line 18 "parseur.y"
 
-    struct _tree* exp;
-    double doubleVal;
-    char * str;
+  struct _tree* exp;
+  double doubleVal;
+  char * str;
 
 
 
