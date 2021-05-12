@@ -1,6 +1,9 @@
 CsteNb 5.000000
-CsteNb 50000000000.000000
+CsteNb 5.000000
+Equals
+CsteNb 5.000000
+CsteNb 5.000000
 AddiNb
-CsteNb NaN
+CsteNb 6.000000
+CsteNb 6.000000
 AddiNb
-SetVar vari

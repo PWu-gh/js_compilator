@@ -145,7 +145,7 @@ void genAssembly(AST t){
 			if(t->val == -9) 		printf("CsteNb NaN\n");
 			else 					printf("CsteNb %f\n",t->val); 
 		}		
-		else if(t->boo != NULL)		printf( "CsteBo %s\n",t->boo);
+		else if(t->boo != NULL)		printf("CsteBo %s\n",t->boo);
 		else if(t->var != NULL)		printf("GetVar %s\n",t->var);
 	}
 
@@ -155,7 +155,7 @@ void genAssembly(AST t){
 		if(!strcmp(t->car, "+"))	printf("AddiNb\n");
 		if(!strcmp(t->car, "*"))	printf("MultNb\n");
 		if(!strcmp(t->car, "-")){
-			if(t->right == NULL) 	printf("NegaNb\n ");
+			if(t->right == NULL) 	printf("NegaNb\n");
 			else 					printf("SubiNb\n");
 		}
 		if(!strcmp(t->car, "/"))	printf("DiviNb\n");

@@ -31,8 +31,9 @@
 %token Equals NotEql LoStNb LoEqNb GrStNb GrEqNb
 %token <str> VAR
 %token <str> PLUS1
+%token <str> IF ELSE DO WHILE
 
-%left '='
+%right '='
 %left Equals NotEql LoStNb LoEqNb GrStNb GrEqNb
 %left '+' '-'
 %left '*' '/'
@@ -53,7 +54,10 @@ resultat:
 ;
 
 command:
-    expression PT_VIRG  { $$ = $1;}
+    expression PT_VIRG      { $$ = $1;}
+    | ';'                   {;}
+    | '{' command '}'       { $$ = $2; } 
+    | IF expression command ELSE command    { $$ =  newBinaryAST("if",$2, newBinaryAST("thenElse",$3,$5));}
 ;
 
 expression: 

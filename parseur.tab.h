@@ -50,8 +50,12 @@
      GrEqNb = 266,
      VAR = 267,
      PLUS1 = 268,
-     Not = 269,
-     MOINSU = 270
+     IF = 269,
+     ELSE = 270,
+     DO = 271,
+     WHILE = 272,
+     Not = 273,
+     MOINSU = 274
    };
 #endif
 
@@ -71,7 +75,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 75 "parseur.tab.h"
+#line 79 "parseur.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
