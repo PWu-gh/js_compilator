@@ -14,7 +14,6 @@ extern int yy_scan_string(const char *);
 
 int main(int argc, char* argv[])
 {
-    printf("\n TEST : %f\n", 1e10);
     AST t; 				/* &t allows to modifie the tree */
     if(argc > 1){
 
