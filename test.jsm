@@ -1,4 +1,6 @@
 CsteNb 5.000000
-GetVar var2
+CsteNb 50000000000.000000
 AddiNb
-T SetVar vari
+CsteNb NaN
+AddiNb
+SetVar vari

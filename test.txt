@@ -1,1 +1,1 @@
-vari = 5 + var2;
+vari = 5+5e10 + NaN;

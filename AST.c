@@ -113,7 +113,10 @@ void printAST(AST t)
 	
 	// values, variables
 	if (t->left==NULL){
-		if(t->val != -1)			printf("%f ",t->val); 
+		if(t->val != -1){
+			if(t->val == -9) 		printf("NaN ");
+			else 					printf("%f ",t->val); 
+		}			
 		else if(t->boo != NULL)		printf("%s ",t->boo); 
 		else if(t->var != NULL)		printf("%s ",t->var); 
 	}
@@ -138,7 +141,10 @@ void genAssembly(AST t){
     
 	// leafs (variables, values)
 	if (t->left==NULL){
-		if(t->val != -1)			printf("CsteNb %f\n",t->val); 
+		if(t->val != -1){
+			if(t->val == -9) 		printf("CsteNb NaN\n");
+			else 					printf("CsteNb %f\n",t->val); 
+		}		
 		else if(t->boo != NULL)		printf( "CsteBo %s\n",t->boo);
 		else if(t->var != NULL)		printf("GetVar %s\n",t->var);
 	}
@@ -164,7 +170,10 @@ void genAssembly(AST t){
 		if(!strcmp(t->car, "<"))	printf("LoStNb\n");
 
 		// variable affect operator
-		if(!strcmp(t->car, "="))	printf("T SetVar %s\n", t->right->car);
-
+		if(!strcmp(t->car, "="))	printf("SetVar %s\n", t->right->car);
+		if(!strcmp(t->car, "++")){	
+									printf("CsteNb 1\n");
+									printf("AddiNb\n");
+		}
     }
 }

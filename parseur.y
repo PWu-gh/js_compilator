@@ -28,15 +28,15 @@
 %token <doubleVal> NOMBRE 
 %token PT_VIRG 
 %token <str> BOOLEAN 
-%token <str> VAR
 %token Equals NotEql LoStNb LoEqNb GrStNb GrEqNb
+%token <str> VAR
+%token <str> PLUS1
 
-%right '='
-
+%left '='
 %left Equals NotEql LoStNb LoEqNb GrStNb GrEqNb
 %left '+' '-'
 %left '*' '/'
-%left Not 
+%left Not PLUS1
 
 
 
@@ -54,7 +54,6 @@ resultat:
 
 command:
     expression PT_VIRG  { $$ = $1;}
-
 ;
 
 expression: 
@@ -64,10 +63,11 @@ expression:
     | expression '/' expression	{ $$ = newBinaryAST("/",$1,$3); }
     | '(' expression ')'		{ $$ = $2; }
     | '-' expression %prec MOINSU	{ $$ = newUnaryAST("-",$2); }
-    | NOMBRE			{ $$ = newLeafAST($1); } 
+    | NOMBRE			{ $$ = newLeafAST($1);} 
     | Bool_exp
     | VAR                         { $$ = newLeafVar($1);}
     | expression '=' expression    { $$ = newBinaryAST("=",$3, newUnaryAST($1->var, newLeafCar("bait"))); }
+    | expression PLUS1     { $$ = newUnaryAST("++",$1); }
 ;
 
 Bool_exp:
@@ -84,6 +84,7 @@ Bool_exp:
 // Var_exp:
 //     VAR                         { $$ = newLeafVar($1);}
 //     | Var_exp '=' expression    { $$ = newBinaryAST("=",$3,$1);}
+//     | Var_exp PLUS1     { $$ = newUnaryAST("++",newLeafVar($1)); }
 // ;
 
 
