@@ -31,7 +31,11 @@
 %token Equals NotEql LoStNb LoEqNb GrStNb GrEqNb
 %token <str> VAR
 %token <str> PLUS1
+<<<<<<< HEAD
 %token <str> IF ELSE
+=======
+%token <str> IF ELSE DO WHILE FOR
+>>>>>>> frag3
 %token <str> OR AND
 
 %right '='
@@ -59,13 +63,18 @@ command:
     expression PT_VIRG      { $$ = $1;}
     | ';'                   {;}
     | '{' command '}'       { $$ = $2; } 
-    | IF expression command ELSE command  { $$ =  newBinaryAST(
-                                                    "ITE",
-                                                    newUnaryAST("ConJump",$2) ,
-                                                    newBinaryAST("TF", 
-                                                                newUnaryAST("jumpElse", $3), 
-                                                                $5 ) );}
-    // | IF expression command ELSE command    { $$ =  newBinaryAST("ConJump",$2, newBinaryAST("skipElse",$3,$5));}
+    | IF '(' expression ')' command ELSE command  { $$ =  newBinaryAST("ITE",
+                                                            newUnaryAST("ConJump",$3) ,
+                                                            newBinaryAST("TF", 
+                                                                        newUnaryAST("jumpElse", $5), 
+                                                                        $7 ) );}
+    | DO command WHILE '(' expression ')'  { $$ = newBinaryAST("DoWhile",
+                                                        newUnaryAST("ConJump",$5) ,
+                                                        newUnaryAST("jumpBack",$2) ) ;}  
+    | FOR '(' expression ';' expression ';' expression ')' command  { $$ = $3; } 
+    | WHILE '(' expression ')' command  { $$ = $3; }                                                 
+                                                        
+                             
 ;
 
 expression: 

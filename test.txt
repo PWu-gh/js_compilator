@@ -1,6 +1,2 @@
-If(True || False){
-    x = 5 ;
-}
-Else{
-    x + 5;
-}
+autre = 4;
+autre = 5;
