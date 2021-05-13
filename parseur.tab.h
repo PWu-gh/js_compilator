@@ -54,10 +54,11 @@
      ELSE = 270,
      DO = 271,
      WHILE = 272,
-     OR = 273,
-     AND = 274,
-     Not = 275,
-     MOINSU = 276
+     FOR = 273,
+     OR = 274,
+     AND = 275,
+     Not = 276,
+     MOINSU = 277
    };
 #endif
 
@@ -77,7 +78,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 81 "parseur.tab.h"
+#line 82 "parseur.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

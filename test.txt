@@ -1,5 +1,2 @@
-Do{
-    x = 5;
-}
-While( True )
 autre = 4;
+autre = 5;

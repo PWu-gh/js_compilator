@@ -200,8 +200,8 @@ void genAssembly(AST t){
 	// operators
     else {
 
-		// get (x=5) (Becareful ! no negation on if strcmp) (diff = | while )
-		if(strcmp(t->car, "=") && strcmp(t->car, "jumpBack") && strcmp(t->car, "jumpElse")){
+		// get (x=5) (Becareful ! no negation on if strcmp) (diff = | while ;)
+		if(strcmp(t->car, "=") && strcmp(t->car, "jumpBack") && strcmp(t->car, "jumpElse") && strcmp(t->car, ";")){
 			if(t->left != NULL){
 				if(t->left->car != NULL)
 					if(!strcmp(t->left->car, "=")) printf("GetVar %s\n",t->left->right->car);
