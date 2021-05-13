@@ -91,8 +91,8 @@ Bool_exp:
     | expression LoEqNb expression  { $$ = newBinaryAST("<=",$1,$3); }
     | expression GrStNb expression  { $$ = newBinaryAST(">",$1,$3); }
     | expression GrEqNb expression  { $$ = newBinaryAST(">=",$1,$3); }
-    | Bool_exp AND Bool_exp  { $$ = newBinaryAST("&&",$1,$3); }
-    | Bool_exp OR Bool_exp  { $$ = newBinaryAST("||",$1,$3); }
+    | expression AND expression  { $$ = newBinaryAST("&&",$1,$3); }
+    | expression OR expression  { $$ = newBinaryAST("||",$1,$3); }
 ;
 
 // Var_exp:

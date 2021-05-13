@@ -192,36 +192,51 @@ void genAssembly(AST t){
 
 	// operators
     else {
+
+		// get (x=5) (Becareful ! no negation on if strcmp)
+		if(strcmp(t->car, "=")){
+			if(t->left != NULL){
+				if(t->left->car != NULL)
+					if(!strcmp(t->left->car, "=")) printf("GetVar %s\n",t->left->right->car);
+			}
+			if(t->right != NULL){
+				if(t->right->car != NULL)
+					if(!strcmp(t->right->car, "=")) printf("GetVar %s\n",t->right->right->car);
+			}
+		}
+
 		// arithmetic operator
 		if(!strcmp(t->car, "+"))	printf("AddiNb\n");
-		if(!strcmp(t->car, "*"))	printf("MultNb\n");
-		if(!strcmp(t->car, "-")){
+		else if(!strcmp(t->car, "*"))	printf("MultNb\n");
+		else if(!strcmp(t->car, "-")){
 			if(t->right == NULL) 	printf("NegaNb\n");
 			else 					printf("SubiNb\n");
 		}
-		if(!strcmp(t->car, "/"))	printf("DiviNb\n");
+		else if(!strcmp(t->car, "/"))	printf("DiviNb\n");
 
 		// boolean operator
-		if(!strcmp(t->car, "=="))	printf("Equals\n");
-		if (!strcmp(t->car, "!"))	printf("Not \n");
-		if(!strcmp(t->car, "!="))	printf("NoEql\n");
-		if(!strcmp(t->car, ">="))	printf("GrEqNb\n");
-		if(!strcmp(t->car, ">"))	printf("GrStNb\n");
-		if(!strcmp(t->car, "<="))	printf("LoEqNb\n");
-		if(!strcmp(t->car, "<"))	printf("LoStNb\n");
+		else if(!strcmp(t->car, "=="))	printf("Equals\n");
+		else if (!strcmp(t->car, "!"))	printf("Not \n");
+		else if(!strcmp(t->car, "!="))	printf("NoEql\n");
+		else if(!strcmp(t->car, ">="))	printf("GrEqNb\n");
+		else if(!strcmp(t->car, ">"))	printf("GrStNb\n");
+		else if(!strcmp(t->car, "<="))	printf("LoEqNb\n");
+		else if(!strcmp(t->car, "<"))	printf("LoStNb\n");
 
 		// variable affect operator
-		if(!strcmp(t->car, "="))	printf("SetVar %s\n", t->right->car);
-		if(!strcmp(t->car, "++")){	
+		else if(!strcmp(t->car, "="))	printf("SetVar %s\n", t->right->car);
+		else if(!strcmp(t->car, "++")){	
 									printf("CsteNb 1\n");
 									printf("AddiNb\n");
 		}
 
 		//IfThenElse
-		if(!strcmp(t->car, "ConJump"))	printf("ConJmp %d\n", jStacker[0]);
-		if(!strcmp(t->car, "jumpElse"))	printf("Jump %d\n", jStacker[1]);
+		else if(!strcmp(t->car, "ConJump"))	printf("ConJmp %d\n", jStacker[0]);
+		else if(!strcmp(t->car, "jumpElse"))	printf("Jump %d\n", jStacker[1]);
 		// AND OR
-		if(!strcmp(t->car, "&&"))	printf("AND\n"); 
-		if(!strcmp(t->car, "||"))	printf("OR\n");
+		else if(!strcmp(t->car, "&&"))	printf("AND\n"); 
+		else if(!strcmp(t->car, "||"))	printf("OR\n");
+
+
 	}
 }
