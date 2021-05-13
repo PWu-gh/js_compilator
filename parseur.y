@@ -57,7 +57,13 @@ command:
     expression PT_VIRG      { $$ = $1;}
     | ';'                   {;}
     | '{' command '}'       { $$ = $2; } 
-    | IF expression command ELSE command    { $$ =  newBinaryAST("if",$2, newBinaryAST("thenElse",$3,$5));}
+    | IF expression command ELSE command  { $$ =  newBinaryAST(
+                                                    "ITE",
+                                                    newUnaryAST("ConJump",$2) ,
+                                                    newBinaryAST("TF", 
+                                                                newUnaryAST("jumpElse", $3), 
+                                                                $5 ) );}
+    // | IF expression command ELSE command    { $$ =  newBinaryAST("ConJump",$2, newBinaryAST("skipElse",$3,$5));}
 ;
 
 expression: 

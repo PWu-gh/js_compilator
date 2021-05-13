@@ -1,9 +1,7 @@
-CsteNb 5.000000
-CsteNb 5.000000
-Equals
-CsteNb 5.000000
-CsteNb 5.000000
-AddiNb
-CsteNb 6.000000
-CsteNb 6.000000
-AddiNb
+GetVar x
+ConJump 3
+CsteBo False
+SetVar y
+Jump 3
+GetVar x
+SetVar y

@@ -175,5 +175,9 @@ void genAssembly(AST t){
 									printf("CsteNb 1\n");
 									printf("AddiNb\n");
 		}
-    }
+
+		//IfThenElse
+		if(!strcmp(t->car, "ConJump"))	printf("ConJump 3\n");
+		if(!strcmp(t->car, "jumpElse"))	printf("Jump 3\n");
+	}
 }
