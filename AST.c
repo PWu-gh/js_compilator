@@ -146,17 +146,19 @@ void countJump(AST t)
 		// printf("Aff %s", t->car); 
 		if(!strcmp(t->car, "ConJump")) jCounter = 0;
 		if(!strcmp(t->car, "jumpElse")){ // jump val pour if
-			jStacker[ jStackCount ] = jCounter-1;
+			jStacker[ jStackCount ] = jCounter;
 			printf("\n  if jump : %d", jStacker[ jStackCount ]);  // valeur du jump if ( jumpcond)
 			jStackCount++; 	// prochaine case du tableau
 			jCounter = 0; 	// reinit compteur
 		}
 		if(!strcmp(t->car, "TF")) {
-			jStacker[ jStackCount ] = jCounter-2;
+			jStacker[ jStackCount ] = jCounter-1;
 			printf("\n  else jump : %d", jStacker[ jStackCount ]); // valeur du jump else
 			jStackCount++; 	// prochaine case du tableau
 			jCounter = 0;	// reinit compteur
 		}
+		if(!strcmp(t->car, "=")) jCounter --; // setvar prend une ligne en moins.
+
 	}
 	jCounter++;
 }
@@ -216,7 +218,10 @@ void genAssembly(AST t){
 		}
 
 		//IfThenElse
-		if(!strcmp(t->car, "ConJump"))	printf("ConJump %d\n", jStacker[0]);
+		if(!strcmp(t->car, "ConJump"))	printf("ConJmp %d\n", jStacker[0]);
 		if(!strcmp(t->car, "jumpElse"))	printf("Jump %d\n", jStacker[1]);
+		// AND OR
+		if(!strcmp(t->car, "&&"))	printf("AND\n"); 
+		if(!strcmp(t->car, "||"))	printf("OR\n");
 	}
 }

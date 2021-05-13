@@ -32,12 +32,14 @@
 %token <str> VAR
 %token <str> PLUS1
 %token <str> IF ELSE DO WHILE
+%token <str> OR AND
 
 %right '='
 %left Equals NotEql LoStNb LoEqNb GrStNb GrEqNb
 %left '+' '-'
 %left '*' '/'
-%left Not PLUS1
+%left Not PLUS1 
+%left OR AND
 
 
 
@@ -89,6 +91,8 @@ Bool_exp:
     | expression LoEqNb expression  { $$ = newBinaryAST("<=",$1,$3); }
     | expression GrStNb expression  { $$ = newBinaryAST(">",$1,$3); }
     | expression GrEqNb expression  { $$ = newBinaryAST(">=",$1,$3); }
+    | Bool_exp AND Bool_exp  { $$ = newBinaryAST("&&",$1,$3); }
+    | Bool_exp OR Bool_exp  { $$ = newBinaryAST("||",$1,$3); }
 ;
 
 // Var_exp:

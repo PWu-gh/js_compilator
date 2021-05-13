@@ -31,7 +31,8 @@
 "Do"    { printf("lex::DO \n"); yylval.str=yytext; return DO; }
 "While" { printf("lex::COND \n"); yylval.str=yytext; return WHILE; }
 
-
+"||"     { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return OR; }
+"&&"    { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return AND; }
 
 [ \t\n] { ; } /* ignore space, tab, and line return */
 ";" { printf("lex::PT_VIRG %s\n\n",yytext); return PT_VIRG; }
