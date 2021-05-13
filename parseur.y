@@ -25,13 +25,14 @@
 
 
 %type  <exp> resultat command expression Bool_exp 
+// %type  <exp> Var_exp
 %token <doubleVal> NOMBRE 
 %token PT_VIRG 
 %token <str> BOOLEAN 
 %token Equals NotEql LoStNb LoEqNb GrStNb GrEqNb
 %token <str> VAR
 %token <str> PLUS1
-%token <str> IF ELSE DO WHILE
+%token <str> IF ELSE
 %token <str> OR AND
 
 %right '='
@@ -65,7 +66,6 @@ command:
                                                     newBinaryAST("TF", 
                                                                 newUnaryAST("jumpElse", $3), 
                                                                 $5 ) );}
-    // | IF expression command ELSE command    { $$ =  newBinaryAST("ConJump",$2, newBinaryAST("skipElse",$3,$5));}
 ;
 
 expression: 
@@ -91,14 +91,14 @@ Bool_exp:
     | expression LoEqNb expression  { $$ = newBinaryAST("<=",$1,$3); }
     | expression GrStNb expression  { $$ = newBinaryAST(">",$1,$3); }
     | expression GrEqNb expression  { $$ = newBinaryAST(">=",$1,$3); }
-    | Bool_exp AND Bool_exp  { $$ = newBinaryAST("&&",$1,$3); }
-    | Bool_exp OR Bool_exp  { $$ = newBinaryAST("||",$1,$3); }
+    | expression AND expression  { $$ = newBinaryAST("&&",$1,$3); }
+    | expression OR expression  { $$ = newBinaryAST("||",$1,$3); }
 ;
 
 // Var_exp:
 //     VAR                         { $$ = newLeafVar($1);}
-//     | Var_exp '=' expression    { $$ = newBinaryAST("=",$3,$1);}
-//     | Var_exp PLUS1     { $$ = newUnaryAST("++",newLeafVar($1)); }
+//     | Var_exp '=' expression    { $$ = newBinaryAST("=",$3, newUnaryAST($1->var, newLeafCar("bait"))); }
+//     | Var_exp PLUS1     { $$ = newUnaryAST("++",$1); }
 // ;
 
 
