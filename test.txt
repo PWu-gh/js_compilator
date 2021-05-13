@@ -1,7 +1,2 @@
-If(x){
-    y = False +5 * True + f;
-    //y = False;
-}
-Else{
-    y = False * 5;
-}
+5+5;
+5+8;

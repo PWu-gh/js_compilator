@@ -24,7 +24,7 @@
 %parse-param {struct _tree* *pT} // yyparse(&t) call => *pT = *(&t) = t 
 
 
-%type  <exp> command expression Bool_exp
+%type  <exp> resultat command expression Bool_exp 
 %token <doubleVal> NOMBRE 
 %token PT_VIRG 
 %token <str> BOOLEAN 
@@ -50,7 +50,7 @@
 
 resultat: 
     command { *pT = $1; }
-    | command resultat { *pT = $1; }
+    | command resultat { *pT = newBinaryAST(";", $1, $2); }
 ;
 
 command:
