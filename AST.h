@@ -32,4 +32,5 @@ void printAST(AST t);
 void genAssembly(AST t);
 void countJump(AST t);
 int * retCountJump(AST t);
+void processCast(AST t);
 #endif // !_AST_H_

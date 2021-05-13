@@ -63,7 +63,7 @@ AST newLeafBool(char* bool_str)
 		// (strcmp(bool_str , "True")==0) = equals
 		t->car = NULL;
 		t->val = -1;
-		t->boo = (!strcmp(bool_str , "True")) ? "True": "False";
+		t->boo = (!strcmp(bool_str , "true")) ? "true": "false";
 		t->var = NULL;
 		t->left = NULL;
 		t->right = NULL;
@@ -263,4 +263,36 @@ void genAssembly(AST t){
 
 
 	}
+}
+
+
+void processCast(AST t){
+	if (t == NULL ) return;
+	// on a créé un fils bait pour pouvoir différencier GetVar de SetVar   (...) "=" var -> bait 
+	if(t->car != NULL){
+		if(!strcmp(t->car, "bait")) return; 
+	}
+	processCast(t->left);
+	processCast(t->right);
+
+	// values, variables
+	if (t->left!=NULL){
+		if(strcmp(t->car, "=") && strcmp(t->car, "jumpBack") && strcmp(t->car, "jumpElse") 
+			&& strcmp(t->car, ";") && strcmp(t->car, "ConJump")
+		){
+			if(t->left != NULL){
+				if(t->left->boo != NULL){
+					t->left->val = (!strcmp(t->left->boo , "true")) ? 1: 0;
+					t->right->boo = NULL;
+				}
+			}
+			if(t->right != NULL){
+				if(t->right->boo != NULL){
+					t->right->val = (!strcmp(t->right->boo , "true")) ? 1: 0;
+					t->right->boo = NULL;
+				}
+			}
+		}
+	}
+
 }

@@ -26,6 +26,8 @@ int main(int argc, char* argv[])
 			/* print the obtained tree */
             printf("\n_______________________\n");
 			if (t->left!=NULL) printf("Root symbol:: %s\n", t->car);	/* check if car at root */
+
+            processCast(t);
 			printAST(t); 
             retCountJump(t);
 
@@ -54,6 +56,8 @@ int main(int argc, char* argv[])
             /* print Assembly code of the obtained tree */
             printf("\n\n_______________________\n");
             printf("Assembly : \n\n");
+
+            retCountJump(t);
             genAssembly(t); // gen dans terminal
 
             /* print the obtained tree */
@@ -61,6 +65,7 @@ int main(int argc, char* argv[])
             printf("AST : \n\n");
 			if (t->left!=NULL) printf("Root symbol : %s\n", t->car);	/* check if car at root */
 			printAST(t); 
+            
             printf("\n\n");
             	
 			freeAST(t);

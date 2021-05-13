@@ -31,11 +31,7 @@
 %token Equals NotEql LoStNb LoEqNb GrStNb GrEqNb
 %token <str> VAR
 %token <str> PLUS1
-<<<<<<< HEAD
-%token <str> IF ELSE
-=======
 %token <str> IF ELSE DO WHILE FOR
->>>>>>> frag3
 %token <str> OR AND
 
 %right '='
