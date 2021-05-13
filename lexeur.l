@@ -13,7 +13,7 @@
 
 [0-9]+(\.[0-9]+)?(e-?[0-9]+)? { printf("lex::NOMBRE %s\n",yytext); yylval.doubleVal=atof(yytext);  return NOMBRE; }
 
-"True"|"False" { printf("lex::BOOLEAN %s\n",yytext); yylval.str=yytext; return BOOLEAN; }
+"true"|"false" { printf("lex::BOOLEAN %s\n",yytext); yylval.str=yytext; return BOOLEAN; }
 "=="    { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return Equals; }
 "!"     { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return Not; }
 "!="    { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return NotEql; }
@@ -22,19 +22,21 @@
 ">"     { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return GrStNb; }
 ">="    { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return GrEqNb; }
 
-[a-z][a-zA-Z0-9_]* { printf("lex::VAR %s\n",yytext); yylval.str=yytext; return VAR; }
+
 "++"    { printf("lex::OP %s\n",yytext); yylval.str=yytext; return PLUS1; }
 "NaN"   { printf("lex::NOMBRE %s\n",yytext); yylval.doubleVal= -9;  return NOMBRE; }
 
-"If"    { printf("lex::COND %s\n",yytext); yylval.str=yytext; return IF; }
-"Else"  { printf("lex::COND %s\n",yytext); yylval.str=yytext; return ELSE; }
+"if"    { printf("lex::COND %s\n",yytext); yylval.str=yytext; return IF; }
+"else"  { printf("lex::COND %s\n",yytext); yylval.str=yytext; return ELSE; }
 
 "||"    { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return OR; }
 "&&"    { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return AND; }
 
-"Do"    { printf("lex::DO %s\n",yytext); yylval.str=yytext; return DO; }
-"While" { printf("lex::COND %s\n",yytext); yylval.str=yytext; return WHILE; }
-"For"   { printf("lex::COND %s\n",yytext); yylval.str=yytext; return FOR; }
+"do"    { printf("lex::DO %s\n",yytext); yylval.str=yytext; return DO; }
+"while" { printf("lex::COND %s\n",yytext); yylval.str=yytext; return WHILE; }
+"for"   { printf("lex::COND %s\n",yytext); yylval.str=yytext; return FOR; }
+
+[a-zA-Z][a-zA-Z0-9_]* { printf("lex::VAR %s\n",yytext); yylval.str=yytext; return VAR; }
 
 [ \t\n] { ; } /* ignore space, tab, and line return */
 ";" { printf("lex::PT_VIRG %s\n\n",yytext); return PT_VIRG; }

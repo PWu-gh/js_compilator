@@ -1,25 +1,25 @@
 
-/*
+
 5+5;
-While(x = True){
+while(x = true){
     5+54;
+}
+
+
+
+/*
+x= 1;
+for( i=0; i<3; i++){
+    5+5;
 }
 */
 
 
 
-x= 1;
-For( i=0; i<3; i++){
-    5+5;
-}
-
-
-
-
 /*
-True;
-Do{
+true;
+do{
     x++;
 }
-While(5 < 1)
+while(5 < 1)
 */
