@@ -156,13 +156,13 @@ void countJump(AST t)
 		}
 		else if(!strcmp(t->car, "jumpElse")){ // jump val pour if
 			jStacker[ jStackCount ] = jCounter;
-			printf("\n  if jump : %d", jStacker[ jStackCount ]);  // valeur du jump if ( jumpcond)
+			// printf("\n  if jump : %d", jStacker[ jStackCount ]);  // valeur du jump if ( jumpcond)
 			jStackCount++; 	// prochaine case du tableau
 			jCounter = 0; 	// reinit compteur
 		}
 		else if(!strcmp(t->car, "TF")) {
 			jStacker[ jStackCount ] = jCounter-1;
-			printf("\n  else jump : %d", jStacker[ jStackCount ]); // valeur du jump else
+			// printf("\n  else jump : %d", jStacker[ jStackCount ]); // valeur du jump else
 			jStackCount++; 	// prochaine case du tableau
 			jCounter = 0;	// reinit compteur
 		}
@@ -171,7 +171,7 @@ void countJump(AST t)
 		// while
 		else if(!strcmp(t->car, "jumpBack")) { // arrives on jumpback so we know the number of nodes between
 			jStacker[ jStackCount ] = jCounter; // on va après le jump de retour ( sortie de boucle )
-			printf("\n jump back: %d", jStacker[ jStackCount ]); // valeur du jump else
+			// printf("\n jump back: %d", jStacker[ jStackCount ]); // valeur du jump else
 			jStackCount++; 	// prochaine case du tableau
 			jStacker[ jStackCount ] = (jCounter+ conditionSize)*-1 ; // back loop ( on doit ajouter la condition)
 			jCounter = 0;	// reinit compteur
