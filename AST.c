@@ -98,6 +98,7 @@ void freeAST(AST t)
 	free(t);
 }
 
+
 /* infix print an AST*/
 void printAST(AST t)
 {
@@ -108,9 +109,9 @@ void printAST(AST t)
 		if(!strcmp(t->car, "bait")) return; 
 	}
 	
+
 	printf("[ ");
 	printAST(t->left);
-	
 	// values, variables
 	if (t->left==NULL){
 		if(t->val != -1){
@@ -121,11 +122,49 @@ void printAST(AST t)
 		else if(t->var != NULL)		printf("%s ",t->var); 
 	}
 	// operators
-	else 	printf("%s ",t->car);
-
+	else {
+		printf("%s ",t->car);
+	}
 	printAST(t->right);
 	printf("] ");
-  
+}
+
+int jStacker[10]; 
+int jStackCount = 0;
+int jCounter = 0;
+
+void countJump(AST t)
+{
+	if (t == NULL ) return;
+	if(t->car != NULL){ if(!strcmp(t->car, "bait")) return; }
+
+	countJump(t->left);
+	countJump(t->right);
+
+
+	if (t->left != NULL){
+		// printf("Aff %s", t->car); 
+		if(!strcmp(t->car, "ConJump")) jCounter = 0;
+		if(!strcmp(t->car, "jumpElse")){ // jump val pour if
+			jStacker[ jStackCount ] = jCounter-1;
+			printf("\n  if jump : %d", jStacker[ jStackCount ]);  // valeur du jump if ( jumpcond)
+			jStackCount++; 	// prochaine case du tableau
+			jCounter = 0; 	// reinit compteur
+		}
+		if(!strcmp(t->car, "TF")) {
+			jStacker[ jStackCount ] = jCounter-2;
+			printf("\n  else jump : %d", jStacker[ jStackCount ]); // valeur du jump else
+			jStackCount++; 	// prochaine case du tableau
+			jCounter = 0;	// reinit compteur
+		}
+	}
+	jCounter++;
+}
+
+int * retCountJump(AST t){
+	countJump(t);
+	jCounter = 0;
+	return jStacker;
 }
 
 
@@ -177,7 +216,7 @@ void genAssembly(AST t){
 		}
 
 		//IfThenElse
-		if(!strcmp(t->car, "ConJump"))	printf("ConJump 3\n");
-		if(!strcmp(t->car, "jumpElse"))	printf("Jump 3\n");
+		if(!strcmp(t->car, "ConJump"))	printf("ConJump %d\n", jStacker[0]);
+		if(!strcmp(t->car, "jumpElse"))	printf("Jump %d\n", jStacker[1]);
 	}
 }

@@ -30,5 +30,5 @@ void freeAST(AST t);
 void printAST(AST t);
 
 void genAssembly(AST t);
-
+// void countJump(AST t);
 #endif // !_AST_H_

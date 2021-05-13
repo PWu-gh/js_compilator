@@ -1,7 +1,15 @@
 GetVar x
-ConJump 3
+ConJump 9
 CsteBo False
+CsteNb 5.000000
+CsteBo True
+MultNb
+AddiNb
+GetVar f
+AddiNb
 SetVar y
-Jump 3
-GetVar x
+Jump 4
+CsteBo False
+CsteNb 5.000000
+MultNb
 SetVar y

@@ -27,6 +27,8 @@ int main(int argc, char* argv[])
             printf("\n_______________________\n");
 			if (t->left!=NULL) printf("Root symbol:: %s\n", t->car);	/* check if car at root */
 			printAST(t); 
+            int * jumpC = retCountJump(t);
+
             printf("\n\n");
 
             // generate assembly code in Fname.jsm

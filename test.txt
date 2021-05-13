@@ -1,6 +1,7 @@
 If(x){
-    y = False;
+    y = False +5 * True + f;
+    //y = False;
 }
 Else{
-    y = x;
+    y = False * 5;
 }
