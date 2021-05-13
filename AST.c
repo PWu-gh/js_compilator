@@ -145,20 +145,27 @@ void countJump(AST t)
 	if (t->left != NULL){
 		// printf("Aff %s", t->car); 
 		if(!strcmp(t->car, "ConJump")) jCounter = 0;
-		if(!strcmp(t->car, "jumpElse")){ // jump val pour if
+		else if(!strcmp(t->car, "jumpElse")){ // jump val pour if
 			jStacker[ jStackCount ] = jCounter;
 			printf("\n  if jump : %d", jStacker[ jStackCount ]);  // valeur du jump if ( jumpcond)
 			jStackCount++; 	// prochaine case du tableau
 			jCounter = 0; 	// reinit compteur
 		}
-		if(!strcmp(t->car, "TF")) {
+		else if(!strcmp(t->car, "TF")) {
 			jStacker[ jStackCount ] = jCounter-1;
 			printf("\n  else jump : %d", jStacker[ jStackCount ]); // valeur du jump else
 			jStackCount++; 	// prochaine case du tableau
 			jCounter = 0;	// reinit compteur
 		}
-		if(!strcmp(t->car, "=")) jCounter --; // setvar prend une ligne en moins.
-
+		else if(!strcmp(t->car, "=")) jCounter --; // setvar prend une ligne en moins.
+		// while
+		else if(!strcmp(t->car, "jumpBack")) {
+			jStacker[ jStackCount ] = jCounter; // on ajoute une ligne pour le juimp de retour
+			printf("\n jump back: %d", jStacker[ jStackCount ]); // valeur du jump else
+			jStackCount++; 	// prochaine case du tableau
+			jStacker[ jStackCount ] = (jCounter+1)*-1 ; // back loop
+			jCounter = 0;	// reinit compteur
+		}
 	}
 	jCounter++;
 }
@@ -193,8 +200,8 @@ void genAssembly(AST t){
 	// operators
     else {
 
-		// get (x=5) (Becareful ! no negation on if strcmp)
-		if(strcmp(t->car, "=")){
+		// get (x=5) (Becareful ! no negation on if strcmp) (diff = | while )
+		if(strcmp(t->car, "=") && strcmp(t->car, "jumpBack") && strcmp(t->car, "jumpElse")){
 			if(t->left != NULL){
 				if(t->left->car != NULL)
 					if(!strcmp(t->left->car, "=")) printf("GetVar %s\n",t->left->right->car);
@@ -231,11 +238,14 @@ void genAssembly(AST t){
 		}
 
 		//IfThenElse
-		else if(!strcmp(t->car, "ConJump"))	printf("ConJmp %d\n", jStacker[0]);
-		else if(!strcmp(t->car, "jumpElse"))	printf("Jump %d\n", jStacker[1]);
+		else if(!strcmp(t->car, "ConJump"))	printf("ConJmp %d\n", jStacker[jCounter++]); // jStaker[0] puis incrémente jCounter
+		else if(!strcmp(t->car, "jumpElse"))	printf("Jump %d\n", jStacker[jCounter++]);
 		// AND OR
 		else if(!strcmp(t->car, "&&"))	printf("AND\n"); 
 		else if(!strcmp(t->car, "||"))	printf("OR\n");
+
+		// do while
+		else if(!strcmp(t->car, "jumpBack"))	printf("Jump %d\n", jStacker[jCounter++]);
 
 
 	}

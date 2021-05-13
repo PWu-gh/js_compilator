@@ -26,14 +26,14 @@
 "++"        { printf("lex::OP %s\n",yytext); yylval.str=yytext; return PLUS1; }
 "NaN" { printf("lex::NOMBRE %s\n",yytext); yylval.doubleVal= -9;  return NOMBRE; }
 
-"If"    { printf("lex::COND \n"); yylval.str=yytext; return IF; }
-"Else"  { printf("lex::COND \n"); yylval.str=yytext; return ELSE; }
+"If"    { printf("lex::COND %s\n",yytext); yylval.str=yytext; return IF; }
+"Else"  { printf("lex::COND %s\n",yytext); yylval.str=yytext; return ELSE; }
 
 "||"     { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return OR; }
 "&&"    { printf("lex::BOOL_OP %s\n",yytext); yylval.str=yytext; return AND; }
 
-"Do"    { printf("lex::DO \n"); yylval.str=yytext; return DO; }
-"While" { printf("lex::COND \n"); yylval.str=yytext; return WHILE; }
+"Do"    { printf("lex::DO %s\n",yytext); yylval.str=yytext; return DO; }
+"While" { printf("lex::COND %s\n",yytext); yylval.str=yytext; return WHILE; }
 
 [ \t\n] { ; } /* ignore space, tab, and line return */
 ";" { printf("lex::PT_VIRG %s\n\n",yytext); return PT_VIRG; }
