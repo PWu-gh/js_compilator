@@ -132,6 +132,7 @@ void printAST(AST t)
 int jStacker[10]; 
 int jStackCount = 0;
 int jCounter = 0;
+int conditionSize;
 
 void countJump(AST t)
 {
@@ -140,11 +141,19 @@ void countJump(AST t)
 
 	countJump(t->left);
 	countJump(t->right);
+	if(t->left == NULL){
+		if(t->car != NULL)
+			if(!strcmp(t->car, "jumpCpt"))
+				jCounter = 0; // on met a 0 pour compter de nombre de noeud pour la condition
+	}
 
-
-	if (t->left != NULL){
+	else{
 		// printf("Aff %s", t->car); 
-		if(!strcmp(t->car, "ConJump")) jCounter = 0;
+
+		if(!strcmp(t->car, "ConJump")) {
+			conditionSize = jCounter;
+			jCounter = 0;
+		}
 		else if(!strcmp(t->car, "jumpElse")){ // jump val pour if
 			jStacker[ jStackCount ] = jCounter;
 			printf("\n  if jump : %d", jStacker[ jStackCount ]);  // valeur du jump if ( jumpcond)
@@ -158,14 +167,17 @@ void countJump(AST t)
 			jCounter = 0;	// reinit compteur
 		}
 		else if(!strcmp(t->car, "=")) jCounter --; // setvar prend une ligne en moins.
+		else if(!strcmp(t->car, "++")) jCounter ++;
 		// while
-		else if(!strcmp(t->car, "jumpBack")) {
-			jStacker[ jStackCount ] = jCounter; // on ajoute une ligne pour le juimp de retour
+		else if(!strcmp(t->car, "jumpBack")) { // arrives on jumpback so we know the number of nodes between
+			jStacker[ jStackCount ] = jCounter; // on va après le jump de retour ( sortie de boucle )
 			printf("\n jump back: %d", jStacker[ jStackCount ]); // valeur du jump else
 			jStackCount++; 	// prochaine case du tableau
-			jStacker[ jStackCount ] = (jCounter+1)*-1 ; // back loop
+			jStacker[ jStackCount ] = (jCounter+ conditionSize)*-1 ; // back loop ( on doit ajouter la condition)
 			jCounter = 0;	// reinit compteur
 		}
+		else if (!strcmp(t->car, "SplitCpt")) jCounter--;
+		
 	}
 	jCounter++;
 }
@@ -201,7 +213,9 @@ void genAssembly(AST t){
     else {
 
 		// get (x=5) (Becareful ! no negation on if strcmp) (diff = | while ;)
-		if(strcmp(t->car, "=") && strcmp(t->car, "jumpBack") && strcmp(t->car, "jumpElse") && strcmp(t->car, ";")){
+		if(strcmp(t->car, "=") && strcmp(t->car, "jumpBack") && strcmp(t->car, "jumpElse") 
+			&& strcmp(t->car, ";") && strcmp(t->car, "ConJump")
+		){
 			if(t->left != NULL){
 				if(t->left->car != NULL)
 					if(!strcmp(t->left->car, "=")) printf("GetVar %s\n",t->left->right->car);
@@ -238,7 +252,7 @@ void genAssembly(AST t){
 		}
 
 		//IfThenElse
-		else if(!strcmp(t->car, "ConJump"))	printf("ConJmp %d\n", jStacker[jCounter++]); // jStaker[0] puis incrémente jCounter
+		else if(!strcmp(t->car, "ConJump"))		printf("ConJmp %d\n", jStacker[jCounter++]); // jStaker[0] puis incrémente jCounter
 		else if(!strcmp(t->car, "jumpElse"))	printf("Jump %d\n", jStacker[jCounter++]);
 		// AND OR
 		else if(!strcmp(t->car, "&&"))	printf("AND\n"); 

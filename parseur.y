@@ -61,7 +61,7 @@ resultat:
 
 command:
     expression PT_VIRG      { $$ = $1;}
-    | ';'                   {;}
+    | PT_VIRG                  {;}
     | '{' command '}'       { $$ = $2; } 
     | IF '(' expression ')' command ELSE command  { $$ =  newBinaryAST("ITE",
                                                             newUnaryAST("ConJump",$3) ,
@@ -69,10 +69,15 @@ command:
                                                                         newUnaryAST("jumpElse", $5), 
                                                                         $7 ) );}
     | DO command WHILE '(' expression ')'  { $$ = newBinaryAST("DoWhile",
-                                                        newUnaryAST("ConJump",$5) ,
+                                                        newBinaryAST("ConJump", newLeafCar("jumpCpt"), $5),
                                                         newUnaryAST("jumpBack",$2) ) ;}  
-    | FOR '(' expression ';' expression ';' expression ')' command  { $$ = $3; } 
-    | WHILE '(' expression ')' command  { $$ = $3; }                                                 
+    | WHILE '(' expression ')' command  { $$ = newBinaryAST("While", 
+                                                            newBinaryAST("ConJump", newLeafCar("jumpCpt"), $3),
+                                                            newUnaryAST("jumpBack",$5) ); }  
+    | FOR '(' expression PT_VIRG expression PT_VIRG expression ')' command  { $$ = newBinaryAST("For", 
+                                                                                        newBinaryAST("ConJump", $3, newBinaryAST("SplitCpt", newLeafCar("jumpCpt"), $5)),
+                                                                                        newBinaryAST("jumpBack",$9, $7)   ) ;} 
+                                                                                       
                                                         
                              
 ;
